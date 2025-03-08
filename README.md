@@ -27,7 +27,7 @@ The solution is a **blockchain-based** platform that tracks supply chain data of
    - Follow these steps to install the **fashion_supply_chain** extension for testing:
      1. Open Google Chrome and go to `chrome://extensions/`.
      2. Enable **Developer mode** at the top right.
-     3. Click **Load unpacked** and select the folder chrome_extension that's inside fashion_supply_chain.
+     3. Click **Load unpacked** and select the folder **chrome_extension** that's inside **fashion_supply_chain**.
      4. The extension will appear in the Chrome toolbar.
         
 3. **Testing the Extension**
