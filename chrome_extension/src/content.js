@@ -1,11 +1,14 @@
+let thisProductId;
+let thisCompanyName;
+
 // Function to detect the cart contents dynamically
 function GetCartContents() {
     let cartItems = [];
     
     const cartSelectors = {
-        "amazon.com": ".sc-product-title",  // Amazon
-        "ebay.com": ".cart-bucket-lineitem .item-title",  // eBay
-        "walmart.com": ".cart-item-name",  // Walmart
+        "amazon.com": ".sc-product-title",  
+        "ebay.com": ".cart-bucket-lineitem .item-title",  
+        "walmart.com": ".cart-item-name",  
     };
 
     let website = window.location.hostname.replace("www.", "");  
@@ -26,43 +29,51 @@ chrome.runtime.sendMessage({
     cartItems: GetCartContents()
 });
 
-function GetProductIdFromUrl() {
-    console.log("At GetProductIdFromUrl()");
+//Extract company name and product ID from current URL - modify to include more fashion companies
+function GetCompanyNameAndProductIdFromUrl() {
+    console.log("At GetCompanyNameAndProductIdFromUrl()");
 
     let currentUrl = window.location.href;
     console.log("Current URL:", currentUrl);
 
-    if (currentUrl.includes('product/')) {
+    if (currentUrl.includes('FashionCompany')) {
+
+        thisCompanyName = "FashionCompany";
 
         const regex = /\/product\/([a-zA-Z0-9]+)\.html/;
         const productId = currentUrl.match(regex);
     
-        // Extract the product ID - will change this to something more universal
-        // when there's actual fashion website in project
         if (productId) {
-            return productId[1]; // This is the product ID
+            thisProductId = productId[1]; // This is the product ID
         } else {
-            return null;
+            thisProductId =  null;
         }
-        
-        // // Extract the product ID - old 
-        // let parts = currentUrl.split('/');
-        // let productId = parts[5];
 
-        console.log("Product ID:", productId);
-        return productId;
-    } else {
+    } else if (currentUrl.includes('shein')){
+
+        thisCompanyName = "Shein";
+        const productId = currentUrl.match(/-p-(\d+)\.html/);
+
+        if (productId) {
+            thisProductId = productId[1]; 
+        } else {
+            thisProductId = null;
+        }
+    }
+    
+    else {
         console.log("This is not a product page.");
-        return null;
+        thisCompanyName = null;
+        thisProductId = null;
     }
 }
 
-let thisProductId = GetProductIdFromUrl();
+GetCompanyNameAndProductIdFromUrl();
 
-// Send detected product ID data to the background script
+// Send detected company name and product ID data to the background script
 chrome.runtime.sendMessage({
-    action: "product_id_detected",
-    website: window.location.hostname,
+    action: "company_name_product_id_detected",
+    company_name: thisCompanyName,
     product_id: thisProductId
 });
 
