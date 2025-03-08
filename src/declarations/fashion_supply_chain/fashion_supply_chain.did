@@ -1,0 +1,80 @@
+type SupplyChainRecord = 
+ record {
+   animal_welfare: AnimalWelfare;
+   company_name: text;
+   csr_practices: CSRPractices;
+   cultural_impact: CulturalImpact;
+   environmental_impact: EnvironmentalImpact;
+   fair_trade_certified: bool;
+   labor_rights: LaborRights;
+   legal_compliance: LegalCompliance;
+   packaging_and_shipping: PackagingAndShipping;
+   product_id: text;
+   product_lifecycle: ProductLifecycle;
+   product_name: text;
+   supplier_relationships: SupplierRelationships;
+ };
+type SupplierRelationships = 
+ record {
+   fair_pricing: bool;
+   long_term_partnerships: bool;
+   supplier_audits: bool;
+ };
+type ProductLifecycle = 
+ record {
+   durability: bool;
+   end_of_life_recyclability: bool;
+   repairability: bool;
+ };
+type PackagingAndShipping = 
+ record {
+   carbon_emissions_in_shipping: float64;
+   packaging_materials: text;
+   sustainable_packaging: bool;
+ };
+type LegalCompliance = 
+ record {
+   environmental_regulations_compliance: bool;
+   labor_laws_compliance: bool;
+ };
+type LaborRights = 
+ record {
+   child_labor: bool;
+   fair_wages: bool;
+   forced_labor: bool;
+   unionization_allowed: bool;
+   working_conditions: text;
+   working_hours: text;
+ };
+type EnvironmentalImpact = 
+ record {
+   carbon_footprint: float64;
+   pollution: text;
+   recyclability: bool;
+   sustainable_materials: bool;
+   waste_management: text;
+   water_usage: text;
+ };
+type CulturalImpact = 
+ record {
+   cultural_appropriation: bool;
+   fair_representation: bool;
+ };
+type CSRPractices = 
+ record {
+   community_support: bool;
+   ethical_marketing: bool;
+   transparency: bool;
+ };
+type AnimalWelfare = 
+ record {
+   animal_sourcing: text;
+   cruelty_free: bool;
+   fur_and_exotic_skinned: bool;
+ };
+service : {
+  AddRecord: (SupplyChainRecord) -> (text);
+  GetRecordByCompanyAndProductId: (text, text) -> (opt SupplyChainRecord);
+  GetRecords: () -> (vec SupplyChainRecord);
+  SendEthicalScore: (text, text) -> (float64) query;
+}

@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "Horizen",
+  "version": "1.0",
+  "description": "Decentralized Fashion Supply Chain",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "background": {
+    "service_worker": "dist/background.bundle.js"
+  },
+  "host_permissions": [
+    "https://*/*",
+    "http://127.0.0.1:8000/*",
+    "https://*.ic0.app/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["src/content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "script-src": ["'self'", "'unsafe-eval'", "http://127.0.0.1:8000", "https://ic0.app"],
+    "object-src": ["'self'"]
+  }, 
+  "icons": {
+    "16": "icons/logo.png",
+    "48": "icons/logo.png",
+    "128": "icons/logo.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/logo.png"  
+      ],
+      "matches": [
+        "<all_urls>" 
+      ]
+    }
+  ]
+}

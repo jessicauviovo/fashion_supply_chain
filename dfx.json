@@ -1,0 +1,24 @@
+{
+  "canisters": {
+    "fashion_supply_chain": {
+      "main": "src/backend/fashion_supply_chain.mo",
+      "type": "motoko"
+    }
+  },
+  "dfx": "0.25.0",
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": ["https://ic0.app"],
+      "type": "persistent"
+    }
+  },
+  "defaults": {
+    "build": {
+      "output": "wasm"
+    }
+  }
+}
