@@ -6,16 +6,16 @@ async function GetProductSupplyChain(companyName, productId) {
     console.log("At GetProductSupplyChain()");
 
     //Validate parameters
-    if(companyName == null || productId == null) {
+    if(companyName == null || productId == null || !companyName instanceof String || !productId instanceof String) {
         return;
     }
     
-    const agent = new HttpAgent({host: "http://127.0.0.1:8000/",}); //TO DO: REPLACE LINK WITH DEPLOYED ONE
-    await agent.fetchRootKey(); //TO DO: REMOVE IN PRODUCTION CODE - only need to do this for local host
+    const agent = new HttpAgent({host: "https://icp-api.io",}); //http://127.0.0.1:8000/
+    //await agent.fetchRootKey(); //only need to do this for local host
 
     const actor = Actor.createActor(idlFactory, {
         agent,
-        canisterId: "bkyz2-fmaaa-aaaaa-qaaaq-cai", //TO DO: DOUBLE CHECK WHETHER TO CHANGE AFTER PRODUCT IS DEPLOYED
+        canisterId: "epzhr-4iaaa-aaaaj-qnm5q-cai", 
     });
     
     console.log("Company Name: ", companyName, "Product ID:", productId);
@@ -23,7 +23,7 @@ async function GetProductSupplyChain(companyName, productId) {
     console.log("Ethical Score: ", ethicalScore);
 
     if(ethicalScore != -1 && ethicalScore < 50) {
-        let popupMessage = "The product you're eyeing has a low ethical score, which means it might not be the best when it comes to things like labor rights, the environment, and animal welfare. How about checking out some other options that are a little kinder to the planet and people? It’s a small change that makes a big difference! 💚";
+        let popupMessage = `The product you're eyeing has a low ethical score ${ethicalScore}/100, which means it might not be the best when it comes to things like labor rights, the environment, and animal welfare. How about checking out some other options that are a little kinder to the planet and people? It’s a small change that makes a big difference! 💚`;
 
         // Get the active tab in the current window
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -52,23 +52,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 //Listener for when a product is being viewed 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "product_id_detected") {
+    if (message.action === "company_name_product_id_detected") {
         
         //Validate parameters
-        if(message.product_id == null || message.website == null) {
-            console.log("Null Product ID or Website");
+        if(message.product_id == null || message.company_name == null) {
+            console.log("Null Company Name or Product ID");
             return;
         }
 
-        console.log("ProductID detected on", message.website, "ID:", message.product_id);
-
-        //let parts = message.website.split('/'); //modify to something more universal
-
-        // Extract the part between the first two dots
-        //let companyName = parts[1];
-        let companyName = "FashionCompany"; //hard-coded for test company as no real fashion data is inputted yet
-        console.log("Getting supply chain info for", companyName, message.product_id);        
-        GetProductSupplyChain(companyName, message.product_id);
+        console.log("Getting supply chain info for", message.company_name, message.product_id);        
+        GetProductSupplyChain(message.company_name, message.product_id);
     }
 });
 
