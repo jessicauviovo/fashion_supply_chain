@@ -33,7 +33,7 @@ Follow these steps to install and test the extension locally:
    - A file dialog will open. Navigate to the folder where your extension file is located ashion_supply_chain/chrome_extension.
 
 ### 5. **Test the Extension**
-   - Load the sample Fashion Company website https://jessicauviovo.github.io/FashionCompany/index.html and interact with it. Compare data there with the data in the Blockchain, see link
+   - Load the sample Fashion Company website https://jessicauviovo.github.io/FashionCompany/index.html and interact with it. Compare data there with the data in the Blockchain, see [link](https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io/?id=epzhr-4iaaa-aaaaj-qnm5q-cai)
 
 ### 7. **Remove the Extension (Optional)**
    - If you no longer want to use the extension, go to `chrome://extensions/`, find your extension, and click **Remove**.
