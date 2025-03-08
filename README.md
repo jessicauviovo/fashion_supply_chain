@@ -76,4 +76,3 @@ Here are the example products on the [**FashionCompany**](https://jessicauviovo.
 - **Babel**: Transpiles modern JavaScript.
   - Installation: `npm install --save-dev @babel/core @babel/preset-env`
 - **IC SDK**: Provides the tools for building decentralized applications on Internet Computer.
-- **Canisters**: Computing units where logic and state are stored on the blockchain.
